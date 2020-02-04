@@ -131,9 +131,12 @@ def hour2day(full_stats):
 
 def summarize_acc(input_path,output_path,option,hz=10,q=75,c=1.05):
   user_list = os.listdir(input_path)
+  if option == "both":
+    os.mkdir(output_path+"/hourly")
+    os.mkdir(output_path+"/daily")
   for i in range(len(user_list)):
     sys.stdout.write( "Processing data from "+ user_list[i]  + '\n')
-    acc_path = path + "/" + user_list[i] +"/accelerometer"
+    acc_path = input_path + "/" + user_list[i] +"/accelerometer"
     if os.path.isdir(acc_path):
       p_stats = patient_stats(acc_path,hz,q,c)
       full_stats = fill_missing(p_stats)
@@ -152,8 +155,8 @@ def summarize_acc(input_path,output_path,option,hz=10,q=75,c=1.05):
         dest_path = output_path + "/" + user_list[i] + "_daily_acc.csv"
         daily_stats.to_csv(dest_path,index=False)
       if option == "both":
-        output_path1 = os.mkdir(output_path+"/hourly")
-        output_path2 = os.mkdir(output_path+"/daily")
+        output_path1 = output_path+"/hourly"
+        output_path2 = output_path+"/daily"
         daily_stats = hour2day(full_stats)
         daily_stats = pd.DataFrame(daily_stats)
         daily_stats.columns = ["year","month","day","active_min","steps","mean_mag","sd_mag",
@@ -171,4 +174,4 @@ def summarize_acc(input_path,output_path,option,hz=10,q=75,c=1.05):
 input_path = "F:/DATA/hope"
 output_path = "C:/Users/glius/Downloads/hope_acc"
 option = "both"
-summarize_acc(input_path,output_path,option,hz=10,q=75,c=1.05)
+summarize_acc(input_path,output_path,option,hz=10,q=85,c=1.1)
