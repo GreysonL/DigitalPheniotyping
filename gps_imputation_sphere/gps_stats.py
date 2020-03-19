@@ -1157,16 +1157,16 @@ def GetStats(traj,option):
   return(summary_stats)
 
 def summarize_gps(input_path,output_path,option,l1,l2,l3,g,a1,a2,b1,b2,b3,d,sigma2,tol,num,switch,linearity):
-  if os.path.exists(output_path+"/trajectory")==F:
+  if os.path.exists(output_path+"/trajectory")==False:
     os.mkdir(output_path+"/trajectory")
   if option == "both":
-    if os.path.exists(output_path+"/hourly")==F:
+    if os.path.exists(output_path+"/hourly")==False:
       os.mkdir(output_path+"/hourly")
-    if os.path.exists(output_path+"/daily")==F:
+    if os.path.exists(output_path+"/daily")==False:
       os.mkdir(output_path+"/daily")
-  if option == "daily" and os.path.exists(output_path+"/daily")==F:
+  if option == "daily" and os.path.exists(output_path+"/daily")==False:
     os.mkdir(output_path+"/daily")
-  if option == "hourly" and os.path.exists(output_path+"/hourly")==F:
+  if option == "hourly" and os.path.exists(output_path+"/hourly")==False:
     os.mkdir(output_path+"/hourly")
   names = os.listdir(input_path)
   for name in names:
@@ -1233,7 +1233,7 @@ tol = 0.05
 num = 10  # number of bvs being used in determing the transition probability, to adjust for inbalanced pause and flights bvs
 switch = 3 # this controls the difficulty to swith the status (flight to pause, pause to flight, larger means more difficult)
 linearity = 2  #if this goes to infinity, it's connecting starting and ending points with straight line
-option = "both"
+option = "daily"
 input_path =  "C:/Users/glius/Downloads/data"
 output_path = "C:/Users/glius/Downloads/output"
 summarize_gps(input_path,output_path,option,l1,l2,l3,g,a1,a2,b1,b2,b3,d,sigma2,tol,num,switch,linearity)
