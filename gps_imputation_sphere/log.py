@@ -5,21 +5,21 @@
 
 '''
 import logging
-from .io import setup_csv
+from io import setup_csv
 
 
 logger = logging.getLogger(__name__)
 
 
 # Dictionary of available log record attributes:
-# For details, see:  
+# For details, see:
 #   https://docs.python.org/3.8/library/logging.html?highlight=logging#logrecord-attributes
 AVAILABLE_ATTRIBUTES = {
 'asctime,msecs': '%(asctime)s', # Human-readable time with milliseconds.
 'created': '%(created)f',       # Unix timestamp (seconds since epoch).
 'filename': '%(filename)s',     # Filename portion of pathname.
 'funcName': '%(funcName)s',     # Originating function.
-'levelname': '%(levelname)s', # Message level, one of: 
+'levelname': '%(levelname)s', # Message level, one of:
                               #   DEBUG, INFO, WARNING, ERROR, CRITICAL
 'levelno': '%(levelno)s',     # Numeric message level.
 'lineno': '%(lineno)d',       # Source line number, if available.
@@ -38,17 +38,17 @@ AVAILABLE_ATTRIBUTES = {
 
 def attributes_to_csv(attribute_list):
     '''
-    Given a list of attributes (keys of AVAILABLE_ATTRIBUTES), returns a 
+    Given a list of attributes (keys of AVAILABLE_ATTRIBUTES), returns a
     logging format with header for writing records to CSV.
 
     Args:
         attribute_list (list): List of keys from AVAILABLE_ATTRIBUTES.
 
     Returns:
-        extended_format (object): 
+        extended_format (object):
             extended_format.attributes (str): format for logging.basicConfig.
             extended_format.header (list): header for the corresponding csv.
-        
+
     '''
     try:
         extended_format = type('extended_log_format', (), {})()
@@ -57,49 +57,49 @@ def attributes_to_csv(attribute_list):
         extended_format.header = []
         for a in attribute_list:
             if ',' in a: extended_format.header += a.split(',') # hack for asctime
-            else: extended_format.header.append(a)                
+            else: extended_format.header.append(a)
         return(extended_format)
     except:
-        logger.warning('Unable to assemble logging format and header.')        
+        logger.warning('Unable to assemble logging format and header.')
 
 
 
 BASIC_CSV_LOG = attributes_to_csv([
 # simple format for logging messages
-    'created',   
+    'created',
     'asctime,msecs',
-    'levelname', 
+    'levelname',
     'module',
-    'funcName',  
-    'message',   
+    'funcName',
+    'message',
     ])
 
 
 
 TRACEBACK_CSV_LOG = attributes_to_csv([
 # more comprehensive format for logging messages (includes traceback info)
-    'created',   
+    'created',
     'asctime,msecs',
-    'levelname', 
+    'levelname',
     'module',
-    'funcName',  
-    'message',       
+    'funcName',
+    'message',
     'lineno',
-    'pathname'    
+    'pathname'
     ])
 
 
-def log_to_csv(log_dir, level = logging.DEBUG, 
-               log_name = 'log', 
+def log_to_csv(log_dir, level = logging.DEBUG,
+               log_name = 'log',
                log_format = BASIC_CSV_LOG.attributes,
                header = BASIC_CSV_LOG.header):
     '''
     Configure the logging system to write messages to a csv.
     Overwrites any existing logging handlers and configurations.
-    
+
     Args:
         log_dir (str): Path to directory where log messages should be written.
-        level (int):  An integer between 0 and 50.  
+        level (int):  An integer between 0 and 50.
             Set level = logging.DEBUG to log all messages.
         log_name (str): Name for the log file.
         log_format (str): The format argument for logging.basicConfig.
