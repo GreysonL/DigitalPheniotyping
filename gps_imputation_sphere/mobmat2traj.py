@@ -3,7 +3,7 @@ import sys
 import math
 import numpy as np
 import scipy.stats as stat
-from ..poplar.legacy.common_funcs import stamp2datetime
+from .common_funcs import stamp2datetime
 from .data2mobmat import great_circle_dist, ExistKnot
 
 
