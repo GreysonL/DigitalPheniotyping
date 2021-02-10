@@ -4,8 +4,7 @@ import pickle
 import logging
 import numpy as np
 import pandas as pd
-from ..poplar.legacy.common_funcs import (stamp2datetime, datetime2stamp,
-                                          read_data, write_all_summaries)
+from .common_funcs import (stamp2datetime, datetime2stamp,read_data, write_all_summaries)
 from ..poplar.functions.log import log_to_csv
 from .data2mobmat import (great_circle_dist, pairwise_great_circle_dist,
                           GPS2MobMat, InferMobMat)
