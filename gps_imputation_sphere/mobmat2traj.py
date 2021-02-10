@@ -3,8 +3,8 @@ import sys
 import math
 import numpy as np
 import scipy.stats as stat
-from .common_funcs import stamp2datetime
-from .data2mobmat import great_circle_dist, ExistKnot
+from common_funcs import stamp2datetime
+from data2mobmat import great_circle_dist, ExistKnot
 
 
 logger = getLogger(__name__)
